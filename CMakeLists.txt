@@ -16,7 +16,6 @@ set(SIZE arm-none-eabi-size)
 SET(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F103C8T6.ld)
 set(DEVICE STM32F10X_MD)
 
-
 SET(COMMON_FLAGS "-mcpu=cortex-m3 -mthumb -Wall -Os -std=gnu99 -fno-common -static -specs=nano.specs -specs=nosys.specs \
 -Wextra -Wshadow -Wno-unused-variable -Wimplicit-function-declaration -Wredundant-decls -Wstrict-prototypes -Wmissing-prototypes \
 -D${DEVICE} -nostdlib")
@@ -28,6 +27,8 @@ SET(CMAKE_EXE_LINKER_FLAGS_INIT "-Wl,-gc-sections,--print-memory-usage -T ${LINK
 PROJECT(usb_hid_bootloader_f1 C CXX ASM)
 set(CMAKE_CXX_STANDARD 11)
 
+# The default Flash Page size (Sector size) for LOW and MEDIUM STM32F103 devices is 1024 bytes
+# High Density STM32F103 devices have 2 kB Flash Page size
 SET(VECTOR_TABLE_OFFSET 0x0000)
 SET(PAGE_SIZE 1024)
 
@@ -41,7 +42,6 @@ add_definitions(-D__weak=__attribute__\(\(weak\)\)
 
 file(GLOB_RECURSE SOURCES "Inc/*.*"
         "Src/*.*"
-        "CMSIS/Device/ST/STM32F10x/Include/*.*"
         "CMSIS/Device/ST/STM32F10x/Source*.*")
 
 include_directories(Inc CMSIS/Device/ST/STM32F10x/Include CMSIS/Include/)
