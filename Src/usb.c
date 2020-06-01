@@ -103,6 +103,10 @@ void USB_Shutdown(void)
 
 void USB_Init(void)
 {
+	SET_BIT(RCC->APB2ENR, RCC_APB2ENR_IOPAEN);
+	GPIOA->CRL	&= ~GPIO_CRL_CNF4;
+	GPIOA->CRL 	|= GPIO_CRL_MODE4_0;
+	GPIOA->BSRR = GPIO_BSRR_BS4;
 
 	/* Reset RX and TX lengths inside RxTxBuffer struct for all
 	 * endpoints
@@ -112,7 +116,7 @@ void USB_Init(void)
 	}
 
 	/* PA12: General purpose Input Float */
-	SET_BIT(RCC->APB2ENR, RCC_APB2ENR_IOPAEN);
+	//SET_BIT(RCC->APB2ENR, RCC_APB2ENR_IOPAEN);
 	MODIFY_REG(GPIOA->CRH,
 		GPIO_CRH_CNF12 | GPIO_CRH_MODE12,
 		GPIO_CRH_CNF12_0);

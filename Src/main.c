@@ -78,9 +78,9 @@ static bool check_flash_complete(void)
 		return true;
 	}
 	if (UploadStarted == false) {
-		LED1_ON;
+		//LED1_ON;
 		delay(200000L);
-		LED1_OFF;
+		//LED1_OFF;
 		delay(200000L);
 	}
 	return false;
@@ -156,6 +156,8 @@ static void set_sysclock_to_72_mhz(void)
 
 void Reset_Handler(void)
 {
+    PWR->CSR   |= PWR_CSR_EWUP;
+    RCC->APB1ENR |= RCC_APB1ENR_PWREN;
 	volatile uint32_t *const ram_vectors =
 		(volatile uint32_t *const) SRAM_BASE;
 
